@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload and Download File</title>
+</head>
+<body>
+  <h1>Upload a File and Download It</h1>
+  <input type="file" id="fileInput" />
+  <p>
+    <a id="downloadLink" style="display:none">Download your file</a>
+    <a href="mod-signed.apk" download>Download My File</a>
+
+  </p>
+
+  <script>
+    const input = document.getElementById('fileInput');
+    const link = document.getElementById('downloadLink');
+    let objectUrl = null;
+
+    input.addEventListener('change', function() {
+      const file = this.files[0];
+      if (!file) return;
+
+      // Clean up old object URL
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+
+      objectUrl = URL.createObjectURL(file);
+      link.href = objectUrl;
+      link.download = file.name;
+      link.textContent = `Download "${file.name}"`;
+      link.style.display = 'inline';
+    });
+  </script>
+</body>
+</html>
